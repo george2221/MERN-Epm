@@ -32,12 +32,21 @@ const ResponsiveAppBar = ({ socket }: any) => {
     setIsAdmin(admin);
   }, [location]);
 
+  // React.useEffect(() => {
+  //   socket?.on("getNotification", (data: any) => {
+  //     console.log("Notified Data", data);
+  //     setNotifications((prev): any => [...prev, data]);
+  //   });
+  // }, [socket]);
+
   React.useEffect(() => {
+    console.log("Socket:", socket);
     socket?.on("getNotification", (data: any) => {
       console.log("Notified Data", data);
       setNotifications((prev): any => [...prev, data]);
     });
   }, [socket]);
+  
 
   let pages;
   if (isadmin) {
@@ -95,19 +104,21 @@ const ResponsiveAppBar = ({ socket }: any) => {
       <MyHeader>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <Typography
+          <Typography
               variant="h6"
               noWrap
               component="a"
-              href="/"
+              // href="/"
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
-                fontFamily: "monospace",
-                fontWeight: 700,
+                 fontFamily: "monospace",
+                //fontFamily:"sans-serif",
+                fontWeight: 1000,
                 letterSpacing: ".3rem",
                 color: "inherit",
                 textDecoration: "none",
+                
               }}
             >
               LOGO
@@ -199,9 +210,13 @@ const ResponsiveAppBar = ({ socket }: any) => {
                     bgcolor: "gray",
                   }}
                 >
-                  {notifications?.map((notification: any) => (
-                    <MenuItem>{notification.action} </MenuItem>
-                  ))}
+                  {/* {notifications?.map((notification: any) => (
+                    <MenuItem>{notification.action} </MenuItem> */}
+                    {notifications?.map((notification: any, index: number) => (
+                    <MenuItem key={index}>{notification.action}</MenuItem>
+                   ))}
+
+
                 </Box>
               </>
             )}
