@@ -19,7 +19,7 @@ const postForgetPassword = async (req: any, res: Response) => {
       expiresIn: "15m",
     }
   );
-  const link = `http://localhost:3000/resetPassword/${employeeExists._id}/${token}`;
+  const link = `http://localhost:3000y/resetPassword/${employeeExists._id}/${token}`;
 
   const client = nodemailer.createTransport({
     service: "Gmail",
@@ -31,7 +31,8 @@ const postForgetPassword = async (req: any, res: Response) => {
 
   client.sendMail({
     from: "saisowmyajayavaram@gmail.com",
-    to: "georgerichard2221@gmail.com",
+     to: "saisowmyajayavaram456@gmail.com",
+    
     subject: "Reset Password",
     text: `
     Hello ${employeeExists.name},

@@ -86,7 +86,16 @@ const NoticeBoard = () => {
           transform: "translate(-50, -50)",
         }}
       >
+<<<<<<< HEAD
        
+=======
+        {/* <Box>
+          <Typography sx={{ color: "red", p: 1 }}>
+            <b>Instructions: </b><br />
+            1. Please fill in the <b>Receiver Email Address</b> to only send the notice to that particular email address. <br />
+            2. If you want to send notice for all users, then please keep the <b>Receiver Email Address</b> blank.         </Typography>
+        </Box> */}
+>>>>>>> 8f8d44367fb71753b7de8ecaa197dc20bf853259
         <Box sx={{ textAlign: "center", color: "#00005C", marginBottom: 2 }}>
           <h1>Notice</h1>
         </Box>
