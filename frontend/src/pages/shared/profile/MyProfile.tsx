@@ -2,20 +2,13 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-
-import { Box, Card, Typography, Button, Paper } from "@mui/material";
-
-
+import { Box, Card, Typography, Button } from "@mui/material";
 import { isLogin } from "../../../utils/auth";
-import { getDevice } from "../../../utils/getScreenSize";
 import { toast } from "react-toastify";
-
 
 const MyProfile = () => {
   const navigate = useNavigate();
-  const [profile, setProfile] = React.useState < any > ({});
-
-
+  const [profile, setProfile] = React.useState<any>({});
 
   const params = useParams();
   const profileId = params.id;
@@ -24,8 +17,7 @@ const MyProfile = () => {
     if (!isLogin()) {
       navigate("/");
     }
-    profileId ? profileDetails() : fecthData();
-
+    profileId ? profileDetails() : fetchData();
   }, []);
 
   const profileDetails = async () => {
@@ -41,7 +33,7 @@ const MyProfile = () => {
     setProfile(response.data);
   };
 
-  const fecthData = async () => {
+  const fetchData = async () => {
     try {
       const response = await axios("http://localhost:5000/api/v1/profile", {
         headers: {
@@ -76,11 +68,27 @@ const MyProfile = () => {
   return (
     <>
       {profileId ? (
-        <Typography variant="h3" sx={{ textAlign: "center", padding: 2, fontFamily: "cursive", xs: { fontSize: "1rem" } }}>
+        <Typography
+          variant="h3"
+          sx={{
+            textAlign: "center",
+            padding: 2,
+            fontFamily: "cursive",
+            xs: { fontSize: "1rem" },
+          }}
+        >
           Profile Details
         </Typography>
       ) : (
-        <Typography variant="h3" sx={{ textAlign: "center", padding: 2, fontFamily: "monospace", fontSize: { xs: "1rem", md: "3rem", sm: "2rem", } }}>
+        <Typography
+          variant="h3"
+          sx={{
+            textAlign: "center",
+            padding: 2,
+            fontFamily: "monospace",
+            fontSize: { xs: "1rem", md: "3rem", sm: "2rem" },
+          }}
+        >
           My Profile
         </Typography>
       )}
@@ -153,14 +161,33 @@ const MyProfile = () => {
               Leaves Status
             </Button>
             <Button
+              color="warning"
+              variant="outlined"
+              sx={{ height: "3rem", p: 2, m: 1 }}
+              onClick={() => navigate(`/claimAttendanceRequest/${profile._id}`)}
+              className="animate__animated animate__lightSpeedInRight animate__delay-1s"
+            >
+              Claim Attendance
+            </Button>
+            <Button
+              color="info"
+              variant="outlined"
+              sx={{ height: "3rem", p: 2, m: 1 }}
+              onClick={() => navigate("/attendanceReqStatus")}
+              className="animate__animated animate__lightSpeedInRight animate__delay-1s"
+            >
+              Attendance Status
+            </Button>
+            <Button
               color="primary"
               variant="outlined"
               sx={{ height: "3rem", p: 2, m: 1 }}
               onClick={() => navigate("/payslip")}
-              className="animate__animated animate__lightSpeedInRight"
+              className="animate_animated animate_lightSpeedInRight"
             >
               Download Pay Slip
             </Button>
+
           </>
         )}
 
@@ -201,7 +228,7 @@ const MyProfile = () => {
             <div>
               <p>Address: {profile?.address}</p>
               <p>Salary: {profile?.salary}</p>
-              <p>Joinning Date: {profile?.joingDate}</p>
+              <p>Joining Date: {profile?.joiningDate}</p>
               <p>image</p>
               <img
                 src={`http://localhost:5000${profile?.image}`}
@@ -231,8 +258,8 @@ const MyProfile = () => {
               Project Information
             </Typography>
             <p>Project Name: {profile?.currentProjects?.projectName}</p>
-            <p>Resposiblity: {profile?.currentProjects?.responsiblity}</p>
-            <p>Staus: {profile?.currentProjects?.status}</p>
+            <p>Responsibility: {profile?.currentProjects?.responsibility}</p>
+            <p>Status: {profile?.currentProjects?.status}</p>
           </div>
         </Card>
         <Card
@@ -259,8 +286,7 @@ const MyProfile = () => {
           </div>
         </Card>
       </Box>
-
-    </ >
+    </>
   );
 };
 

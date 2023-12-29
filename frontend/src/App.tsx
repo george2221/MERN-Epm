@@ -19,6 +19,9 @@ import { io } from "socket.io-client";
 import AllLeaveRequest from "./pages/admin/leaveReqLists/AllLeaveRequest";
 import ClaimLeaveRequest from "./pages/shared/leaveReq/ClaimLeaveRequest";
 import LeaveReqStatus from "./pages/shared/leaveReq/LeaveReqStatus";
+import AllAttendanceRequest from "./pages/admin/attendanceReq/AllAttendanceRequest";
+import ClaimAttendanceRequest from "./pages/shared/AttendanceReq/ClaimAttendanceRequest";
+import AttendanceReqStatus from "./pages/shared/AttendanceReq/AttendanceReqStatus";
 import NoticeBoard from "./pages/shared/notice/NoticeBoard";
 import ShowNotice from "./pages/shared/notice/ShowNotice";
 
@@ -75,6 +78,9 @@ function App() {
         <Route path="/allLeaveRequest" element={<AllLeaveRequest />} />
         <Route path="/leaveRequestStatus" element={<LeaveReqStatus />} />
         <Route path="/claimLeaveRequest/:id" element={<ClaimLeaveRequest />} />
+        <Route path="/allAttendanceRequest" element={<AllAttendanceRequest />} />
+        <Route path="/attendanceReqStatus" element={<AttendanceReqStatus/>} />
+        <Route path="/claimAttendanceRequest/:id" element={<ClaimAttendanceRequest />} />
         <Route path="/noticeboard" element={<NoticeBoard />} />
         <Route path="/showNoticeBoard" element={<ShowNotice />} />
         <Route

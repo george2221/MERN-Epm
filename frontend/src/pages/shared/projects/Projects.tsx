@@ -18,7 +18,7 @@ const Projects = ({
   const [error, setError] = React.useState(null);
   const [response, setResponse] = React.useState([]);
   const [currentPage, setCurrentPages] = React.useState(1);
-  const [currentLimit, setCurrentLimit] = React.useState(3);
+  const [currentLimit, setCurrentLimit] = React.useState(10);
 
   useEffect(() => {
     if (!isLogin()) {

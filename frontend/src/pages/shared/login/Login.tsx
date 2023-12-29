@@ -2,28 +2,30 @@ import React from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
-import { Paper, Grid, Box, Button, Link, Typography } from "@mui/material";
-
-
+import { Paper, Grid, Box, Button, Link, Typography, IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import loginImage from "../../../assets/images/bg-login.jpg";
 import { LoginTextField } from "../../style/TextField.styles";
 
-
 const Login = ({ socket }: any) => {
-  const [email, setEmail] = React.useState(null);
+  const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
   const [error, setError] = React.useState(false);
 
   const navigate = useNavigate();
 
   const loginInputContainer = [
     { name: "email", label: "Email Address", type: "email", value: email, onChange: (e: any) => setEmail(e.target.value), autoComplete: "email", autoFocus: true },
-    { name: "password", label: "Password", type: "password", value: password, onChange: (e: any) => setPassword(e.target.value), autoComplete: "current-password", autoFocus: false }
-  ]
+    { name: "password", label: "Password", type: showPassword ? "text" : "password", value: password, onChange: (e: any) => setPassword(e.target.value), autoComplete: "current-password", autoFocus: false }
+  ];
+
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement> | any) => {
     e.preventDefault();
-
     postData();
   };
 
@@ -48,8 +50,6 @@ const Login = ({ socket }: any) => {
       .catch((err: any) => {
         console.log(err.response);
         toast.error(err.response.data);
-
-        //alert(err.response.data);
       });
   };
 
@@ -93,25 +93,31 @@ const Login = ({ socket }: any) => {
             </Typography>
 
             <Box component="form" onSubmit={onSubmit} noValidate sx={{ m: 2 }}>
-              {
-                loginInputContainer.map((input, index) => {
-                  return (
-                    <LoginTextField
-                      key={index}
-                      margin="normal"
-                      required
-                      fullWidth
-                      id={input.name}
-                      label={input.label}
-                      name={input.name}
-                      onChange={input.onChange}
-                      autoComplete={input.autoComplete}
-                      autoFocus={input.autoFocus}
-
-                    />
-                  )
-                })
-              }
+              {loginInputContainer.map((input, index) => (
+                <LoginTextField
+                  key={index}
+                  margin="normal"
+                  required
+                  fullWidth
+                  id={input.name}
+                  label={input.label}
+                  name={input.name}
+                  type={input.type}
+                  value={input.value}
+                  onChange={input.onChange}
+                  autoComplete={input.autoComplete}
+                  autoFocus={input.autoFocus}
+                  InputProps={input.name === "password" ? {
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={handleTogglePasswordVisibility}>
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  } : undefined}
+                />
+              ))}
               <Button
                 type="submit"
                 fullWidth
@@ -132,7 +138,6 @@ const Login = ({ socket }: any) => {
         </Paper>
       </Grid>
     </Grid>
-
   );
 }
 

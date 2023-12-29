@@ -16,8 +16,11 @@ import resetPassword from "./routes/resetPassword.route";
 import { notFound } from "./middlewires/error";
 import imageUpload from "./routes/imageUpload.route";
 import leaveRequest from "./routes/leaveRequest.route";
+import attendanceRequest from "./routes/attendanceRequest.route"
 import noticeFileUploads from "./routes/noticeFileUploads.route";
 import notice from "./routes/notice.route";
+
+
 
 dotenv.config();
 connectDB();
@@ -45,6 +48,7 @@ app.use("/api/v1/uploads", imageUpload);
 app.use("/api/v1/forgetPassword", forgetPassword);
 app.use("/api/v1/resetPassword", resetPassword);
 app.use("/api/v1/leaveRequest", leaveRequest);
+app.use("/api/v1/attendanceRequest",attendanceRequest);
 app.use("/api/v1/noticeFileUploads", noticeFileUploads);
 app.use("/api/v1/notice", notice);
 

@@ -1,6 +1,8 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+// import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom"; 
 import { useLocation } from "react-router-dom";
+
 
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -26,18 +28,28 @@ const ResponsiveAppBar = ({ socket }: any) => {
   const [notifications, setNotifications] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     const admin = isAdmin();
     setIsAdmin(admin);
   }, [location]);
 
+  // React.useEffect(() => {
+  //   socket?.on("getNotification", (data: any) => {
+  //     console.log("Notified Data", data);
+  //     setNotifications((prev): any => [...prev, data]);
+  //   });
+  // }, [socket]);
+
   React.useEffect(() => {
+    console.log("Socket:", socket);
     socket?.on("getNotification", (data: any) => {
       console.log("Notified Data", data);
       setNotifications((prev): any => [...prev, data]);
     });
   }, [socket]);
+  
 
   let pages;
   if (isadmin) {
@@ -48,6 +60,7 @@ const ResponsiveAppBar = ({ socket }: any) => {
       ["Projects", "/projects"],
       ["Profiles", "/profiles"],
       ["Leave Requests", "/allLeaveRequest"],
+      ["Attendance Requests","/allAttendanceRequest"],
       ["Send Notice", "/noticeboard"],
       ["Notice Board", "/showNoticeBoard"],
     ];
@@ -87,7 +100,8 @@ const ResponsiveAppBar = ({ socket }: any) => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    window.location.href = "/";
+    // window.location.href = "/";
+    navigate("/");
   };
   if (["/"].includes(location.pathname)) return null;
   return (
@@ -95,22 +109,24 @@ const ResponsiveAppBar = ({ socket }: any) => {
       <MyHeader>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <Typography
+          <Typography
               variant="h6"
               noWrap
               component="a"
-              href="/"
+              // href="/"
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
-                fontFamily: "monospace",
-                fontWeight: 700,
+                 fontFamily: "monospace",
+                //fontFamily:"sans-serif",
+                fontWeight: 1000,
                 letterSpacing: ".3rem",
                 color: "inherit",
                 textDecoration: "none",
+                
               }}
             >
-              LOGO
+              ABC
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -168,7 +184,7 @@ const ResponsiveAppBar = ({ socket }: any) => {
                 textDecoration: "none",
               }}
             >
-              LOGO
+              ABC
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page) => (
@@ -199,9 +215,13 @@ const ResponsiveAppBar = ({ socket }: any) => {
                     bgcolor: "gray",
                   }}
                 >
-                  {notifications?.map((notification: any) => (
-                    <MenuItem>{notification.action} </MenuItem>
-                  ))}
+                  {/* {notifications?.map((notification: any) => (
+                    <MenuItem>{notification.action} </MenuItem> */}
+                    {notifications?.map((notification: any, index: number) => (
+                    <MenuItem key={index}>{notification.action}</MenuItem>
+                   ))}
+
+
                 </Box>
               </>
             )}

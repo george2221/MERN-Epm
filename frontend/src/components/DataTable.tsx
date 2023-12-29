@@ -117,7 +117,7 @@ const DataTable = ({
                   <Hidden smDown>
                     <TableCell align="right">Client Name</TableCell>
                     <TableCell align="center">Status</TableCell>
-                    <TableCell align="center">PM</TableCell>
+                    
                     <TableCell align="center">Deadline</TableCell>
                   </Hidden>
                 </>
@@ -188,7 +188,7 @@ const DataTable = ({
                       >
                         {row.status}
                       </TableCell>
-                      <TableCell align="center">{row.pm}</TableCell>
+                      
                       <TableCell align="center">
                         {row.duration[0].slice(0, 10)} TO{" "}
                         {row.duration[1].slice(0, 10)}
@@ -218,7 +218,7 @@ const DataTable = ({
           </TableBody>
         </Table>
       </TableContainer>
-      <Pagination count={pageNumbers.length} onChange={(e, value) => paginate(value)} />
+      
     </Box>
   );
 };

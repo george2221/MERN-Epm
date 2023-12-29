@@ -2,21 +2,25 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import { TextField, Box, Button, Paper, Card, Typography } from "@mui/material";
+import { TextField, Box, Button, Paper, Card, Typography, IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import { LoginTextField } from "../../style/TextField.styles";
 import backgroundImage from "../../../assets/images/bg-change-pass.jpg";
 
+// ... (previous code)
+
 const ChangePassword = () => {
   const [newPassword, setNewPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const navigate = useNavigate();
 
   const inputContainer = [
-    { id: "password", name: "password", label: "New Password", type: "password", onChange: (e: any) => setNewPassword(e.target.value) },
-    { id: "confirm-password", name: "confirm-password", label: "Confirm Password", type: "password", onChange: (e: any) => setConfirmPassword(e.target.value) }
-  ]
+    { id: "password", name: "password", label: "New Password", type: showPassword ? "text" : "password", onChange: (e: any) => setNewPassword(e.target.value) },
+    { id: "confirm-password", name: "confirm-password", label: "Confirm Password", type: showPassword ? "text" : "password", onChange: (e: any) => setConfirmPassword(e.target.value) }
+  ];
 
   const decoded = JSON.parse(localStorage.getItem("decoded") || "{}");
 
@@ -62,6 +66,10 @@ const ChangePassword = () => {
     localStorage.removeItem("decoded");
   };
 
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <Paper
       sx={{
@@ -70,7 +78,6 @@ const ChangePassword = () => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        // backgroundColor: "#B9DEE1"
         backgroundImage: `url(${backgroundImage})`,
       }}
     >
@@ -86,55 +93,53 @@ const ChangePassword = () => {
           borderColor: "white",
           boxShadow: 3,
           zIndex: 1,
-
         }}
       >
         <Typography variant="h4" sx={{ color: "white", p: 1 }}>
           Change Password
         </Typography>
         <br />
-        <Box sx={{
-          height: "80%",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}>
+        <Box
+          sx={{
+            height: "80%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
           <form onSubmit={handleSubmit}>
-            {/* <TextField
-            fullWidth
-            id="password"
-            name="password"
-            label="New Password"
-            type="password"
-            onChange={(e) => setNewPassword(e.target.value)}
-            sx={{ marginBottom: 2 }}
-          />
-          <TextField
-            fullWidth
-            id="confirm-password"
-            name="confirm-password"
-            label="Confirm Password"
-            type="password"
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            sx={{ marginBottom: 2 }}
-          /> */}
-            {
-              inputContainer.map((input, index) => {
-                return (
-                  <LoginTextField
-                    fullWidth
-                    id={input.id}
-                    name={input.name}
-                    label={input.label}
-                    type={input.type}
-                    onChange={input.onChange}
-                    sx={{ marginBottom: 2 }}
-                    key={index}
-                  />
-                )
-              })
-            }
-            <Button color="primary" variant="contained" fullWidth type="submit" sx={{ border: 1, borderColor: "white" }}>
+            {inputContainer.map((input, index) => (
+              <LoginTextField
+                fullWidth
+                id={input.id}
+                name={input.name}
+                label={input.label}
+                type={input.type}
+                onChange={input.onChange}
+                sx={{ marginBottom: 2 }}
+                key={index}
+                InputProps={
+                  input.name === "password"
+                    ? {
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton onClick={handleTogglePasswordVisibility}>
+                              {showPassword ? <Visibility /> : <VisibilityOff />}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }
+                    : undefined
+                }
+              />
+            ))}
+            <Button
+              color="primary"
+              variant="contained"
+              fullWidth
+              type="submit"
+              sx={{ border: 1, borderColor: "white" }}
+            >
               Submit
             </Button>
           </form>
